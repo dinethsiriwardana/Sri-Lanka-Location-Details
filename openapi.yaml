@@ -1,0 +1,220 @@
+openapi: 3.1.0
+info:
+  title: LK Location Details API
+  description: API for retrieving location details of Sri Lanka, including cities, districts, and provinces.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /cities:
+    get:
+      summary: Retrieve all cities
+      description: Returns a list of all cities in Sri Lanka.
+      responses:
+        '200':
+          description: A list of cities.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cityName:
+                      type: string
+                    district:
+                      type: string
+                    province:
+                      type: string
+  /cities/district/{district}:
+    get:
+      summary: Retrieve cities by district
+      description: Returns cities located in the specified district.
+      parameters:
+        - name: district
+          in: path
+          required: true
+          description: The name of the district.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of cities in the district.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cityName:
+                      type: string
+  /cities/province/{province}:
+    get:
+      summary: Retrieve cities by province
+      description: Returns cities located in the specified province.
+      parameters:
+        - name: province
+          in: path
+          required: true
+          description: The name of the province.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of cities in the province.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cityName:
+                      type: string
+  /cities/postcode/{postcode}:
+    get:
+      summary: Retrieve city by postcode
+      description: Returns the city associated with the given postcode.
+      parameters:
+        - name: postcode
+          in: path
+          required: true
+          description: The postcode of the city.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The city for the given postcode.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cityName:
+                    type: string
+  /cities/search:
+    get:
+      summary: Search for cities
+      description: Search for cities by name.
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Query string for the city name.
+          schema:
+            type: string
+        - name: lang
+          in: query
+          required: false
+          description: Language of the city name (e.g., "en" or "si").
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for cities.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cityName:
+                      type: string
+  /cities/nearby:
+    get:
+      summary: Search for cities by GPS
+      description: Find cities near a given GPS coordinate.
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          description: Latitude of the location.
+          schema:
+            type: number
+        - name: lon
+          in: query
+          required: true
+          description: Longitude of the location.
+          schema:
+            type: number
+        - name: radius
+          in: query
+          required: true
+          description: Search radius in kilometers.
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Cities near the given GPS location.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cityName:
+                      type: string
+  /provinces:
+    get:
+      summary: Retrieve all provinces
+      description: Returns a list of all provinces in Sri Lanka.
+      responses:
+        '200':
+          description: A list of provinces.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    provinceName:
+                      type: string
+  /districts:
+    get:
+      summary: Retrieve all districts
+      description: Returns a list of all districts in Sri Lanka.
+      responses:
+        '200':
+          description: A list of districts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    districtName:
+                      type: string
+  /districts/province-name/{province}:
+    get:
+      summary: Retrieve districts for a province
+      description: Returns districts located in the specified province.
+      parameters:
+        - name: province
+          in: path
+          required: true
+          description: The name of the province.
+          schema:
+            type: string
+        - name: lang
+          in: query
+          required: false
+          description: Language of the district name (e.g., "en" or "si").
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of districts in the province.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    districtName:
+                      type: string

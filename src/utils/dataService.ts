@@ -1,9 +1,11 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { City, CityData } from "../types/city";
+import { City, CityData, District, Province } from "../types/city";
 
 class DataService {
   private citiesData: City[] | null = null;
+  private districts: District[] | null = null;
+  private provinces: Province[] | null = null;
 
   async loadData(): Promise<void> {
     try {
@@ -11,11 +13,47 @@ class DataService {
       const rawData = await fs.readFile(citiesPath, "utf8");
       const parsedData: CityData = JSON.parse(rawData);
       this.citiesData = parsedData.cities;
+
+      this.initializeDistrictsAndProvinces();
+
       console.log("Data loaded successfully");
     } catch (error) {
       console.error("Error loading data:", error);
       throw error;
     }
+  }
+
+  private initializeDistrictsAndProvinces(): void {
+    if (!this.citiesData) return;
+
+    // Initialize districts
+    const districtsMap = new Map<string, District>();
+    this.citiesData.forEach((city) => {
+      if (!districtsMap.has(city.district_id)) {
+        districtsMap.set(city.district_id, {
+          district_id: city.district_id,
+          district_name_en: city.district_name_en,
+          district_name_si: city.district_name_si,
+          district_name_ta: city.district_name_ta,
+          province_id: city.province_id,
+        });
+      }
+    });
+    this.districts = Array.from(districtsMap.values());
+
+    // Initialize provinces
+    const provincesMap = new Map<string, Province>();
+    this.citiesData.forEach((city) => {
+      if (!provincesMap.has(city.province_id)) {
+        provincesMap.set(city.province_id, {
+          province_id: city.province_id,
+          province_name_en: city.province_name_en,
+          province_name_si: city.province_name_si,
+          province_name_ta: city.province_name_ta,
+        });
+      }
+    });
+    this.provinces = Array.from(provincesMap.values());
   }
 
   isDataLoaded(): boolean {
@@ -27,6 +65,60 @@ class DataService {
       throw new Error("Data not loaded");
     }
     return this.citiesData;
+  }
+  getDistricts(): District[] {
+    if (!this.districts) {
+      throw new Error("Data not loaded");
+    }
+    return this.districts;
+  }
+
+  getProvinces(): Province[] {
+    if (!this.provinces) {
+      throw new Error("Data not loaded");
+    }
+    return this.provinces;
+  }
+
+  getDistrictsByProvince(provinceId: string): District[] {
+    if (!this.districts) {
+      throw new Error("Data not loaded");
+    }
+    return this.districts.filter(
+      (district) => district.province_id === provinceId
+    );
+  }
+
+  getDistrictsByProvinceName(
+    provinceName: string,
+    language: "en" | "si" | "ta" = "en"
+  ): District[] {
+    if (!this.districts || !this.provinces) {
+      throw new Error("Data not loaded");
+    }
+
+    const province = this.provinces.find((p) => {
+      switch (language) {
+        case "si":
+          return (
+            p.province_name_si.toLowerCase() === provinceName.toLowerCase()
+          );
+        case "ta":
+          return (
+            p.province_name_ta.toLowerCase() === provinceName.toLowerCase()
+          );
+        default:
+          return (
+            p.province_name_en.toLowerCase() === provinceName.toLowerCase()
+          );
+      }
+    });
+
+    if (!province) {
+      return [];
+    }
+
+    return this.getDistrictsByProvince(province.province_id);
   }
 
   getCitiesByDistrict(districtName: string): City[] {

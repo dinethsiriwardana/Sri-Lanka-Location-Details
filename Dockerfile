@@ -11,6 +11,9 @@ COPY data ./data
 RUN npm install
 RUN npm run build
 
+# Switch back to non-root user
+USER 10014
+
 EXPOSE 3000
 
 CMD ["npm", "start"]

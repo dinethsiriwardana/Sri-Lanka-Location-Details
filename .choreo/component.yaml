@@ -1,0 +1,37 @@
+# +required The configuration file schema version
+schemaVersion: 1.1
+
+# +optional Incoming connection details for the component
+endpoints:
+  # +required Unique name for the endpoint.
+  # This name will be used when generating the managed API
+  - name: sri-lanka-cities-api
+    # +optional Display name for the endpoint.
+    displayName: Sri Lanka Cities API
+    # +required Service section has the user service endpoint details
+    service:
+      # +optional Context (base path) of the API that gets exposed via the endpoint.
+      basePath: /api
+      # +required Numeric port value that gets exposed via the endpoint
+      port: 3000
+    # +required Type of traffic that the endpoint is accepting.
+    # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
+    type: REST
+    # +optional Network level visibilities of the endpoint.
+    # Accepted values: Project|Organization|Public(Default).
+    networkVisibilities: 
+      - Public
+      - Organization
+    # +optional Path to the schema definition file. Defaults to wild card route if not provided
+    # This is only applicable to REST or WS endpoint types.
+    # The path should be relative to the docker context.
+    schemaFilePath: openapi.yaml
+
+  # +optional Outgoing connection details for the component.
+dependencies:
+    # +optional Defines the connection references from the Internal Marketplace.
+  connectionReferences:
+      # +required Name of the connection.
+    - name: location-data-connection
+        # +required service identifier of the dependent component.
+      resourceRef: service:/SriLankaCitiesData/LocationData/v1/ad088/PUBLIC

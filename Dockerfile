@@ -3,8 +3,7 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY tsconfig.json ./
-COPY .env ./
+COPY tsconfig.json .
 COPY src ./src
 COPY data ./data
 

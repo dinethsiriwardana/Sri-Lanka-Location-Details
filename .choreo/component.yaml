@@ -4,34 +4,90 @@ schemaVersion: 1.1
 # +optional Incoming connection details for the component
 endpoints:
   # +required Unique name for the endpoint.
-  # This name will be used when generating the managed API
   - name: sri-lanka-cities-api
     # +optional Display name for the endpoint.
     displayName: Sri Lanka Cities API
-    # +required Service section has the user service endpoint details
+    # +required Service section
     service:
-      # +optional Context (base path) of the API that gets exposed via the endpoint.
+      # +optional Context (base path) of the API
       basePath: /api
-      # +required Numeric port value that gets exposed via the endpoint
+      # +required Port number
       port: 3000
-    # +required Type of traffic that the endpoint is accepting.
-    # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
+      # +optional Health check configuration
+      healthCheck:
+        # +optional Health check path
+        path: /health
+        # +optional Initial delay in seconds
+        initialDelaySeconds: 20
+        # +optional Period between health checks
+        periodSeconds: 30
+        # +optional Timeout for health checks
+        timeoutSeconds: 3
+    # +required Endpoint type
     type: REST
-    # +optional Network level visibilities of the endpoint.
-    # Accepted values: Project|Organization|Public(Default).
+    # +optional Network visibilities
     networkVisibilities: 
       - Public
       - Organization
-    # +optional Path to the schema definition file. Defaults to wild card route if not provided
-    # This is only applicable to REST or WS endpoint types.
-    # The path should be relative to the docker context.
+    # +optional OpenAPI schema path
     schemaFilePath: openapi.yaml
+    # +optional Resource requirements
+    resources:
+      # +optional CPU request and limit
+      cpu:
+        request: "100m"
+        limit: "500m"
+      # +optional Memory request and limit
+      memory:
+        request: "128Mi"
+        limit: "512Mi"
 
-  # +optional Outgoing connection details for the component.
+# +optional Dependencies section
 dependencies:
-    # +optional Defines the connection references from the Internal Marketplace.
+  # +optional Connection references
   connectionReferences:
-      # +required Name of the connection.
     - name: location-data-connection
-        # +required service identifier of the dependent component.
       resourceRef: service:/SriLankaCitiesData/LocationData/v1/ad088/PUBLIC
+
+# +optional Build configuration
+build:
+  # +optional Docker build context directory
+  context: .
+  # +optional Docker build arguments
+  buildArgs:
+    - name: NODE_ENV
+      value: production
+
+# +optional Runtime configuration
+runtime:
+  # +optional Environment variables
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: LOG_LEVEL
+      value: info
+  
+  # +optional Deployment configuration
+  deployment:
+    # +optional Minimum replicas
+    minReplicas: 1
+    # +optional Maximum replicas
+    maxReplicas: 3
+    # +optional Container configurations
+    container:
+      # +optional Container port
+      port: 3000
+      # +optional Readiness probe
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 3000
+        initialDelaySeconds: 20
+        periodSeconds: 30
+      # +optional Liveness probe
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 3000
+        initialDelaySeconds: 20
+        periodSeconds: 30

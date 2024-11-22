@@ -1,4 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
+import { Server } from 'http';
+
 import cors from "cors";
 import dotenv from "dotenv";
 import dataService from "./utils/dataService";
@@ -7,6 +9,8 @@ import { errorHandler } from "./middlewares/errorHandler";
 dotenv.config();
 
 const app = express();
+let server: Server;
+
 const port = process.env.PORT || 3000;
 
 // Middleware
@@ -22,6 +26,15 @@ const initializeData = async () => {
     process.exit(1);
   }
 };
+
+// In your main application file
+app.get('/health', (req, res) => {
+  res.status(200).json({
+      status: 'OK',
+      timestamp: new Date().toISOString(),
+      version: process.env.npm_package_version || '1.0.0'
+  });
+});
 
 // Routes
 app.get("/api/cities", (req: Request, res: Response) => {
@@ -193,7 +206,7 @@ app.use(errorHandler);
 
 initializeData()
   .then(() => {
-    app.listen(port, () => {
+    server = app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   })
@@ -201,3 +214,37 @@ initializeData()
     console.error("Failed to start server:", error);
     process.exit(1);
   });
+
+
+  const shutdown = () => {
+    console.log('Received shutdown signal, starting graceful shutdown...');
+    if (server) {
+        server.close(() => {
+            console.log('Server closed');
+            process.exit(0);
+        });
+        
+        // Force close after 10 seconds
+        setTimeout(() => {
+            console.log('Could not close connections in time, forcefully shutting down');
+            process.exit(1);
+        }, 10000);
+    } else {
+        process.exit(0);
+    }
+};
+
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+process.on('SIGQUIT', shutdown)
+
+process.on('exit', (code) => {
+  console.log(`Process exiting with code: ${code}`);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Application specific logging, throwing an error, or other logic here
+});

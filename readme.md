@@ -2,6 +2,7 @@
 
 An API to retrieve location details of Sri Lanka, including cities, districts, and provinces. Built with **Node.js**, **Express**, and **TypeScript**, this project is ideal for accessing and searching geographic information for Sri Lankan locations.
 
+Avaiable on http://srilankalocationdetails.centralindia.azurecontainer.io:3000/api/cities
 ---
 
 ## Features

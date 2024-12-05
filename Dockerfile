@@ -3,17 +3,18 @@ FROM node:18-alpine AS builder
 
 WORKDIR /usr/src/app
 
-# Copy only package files first to leverage Docker cache
+# Copy package files
 COPY package*.json tsconfig.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Generate package-lock.json and install dependencies
+RUN npm install
 
-# Copy source and build
+# Copy source files
 COPY src ./src
 COPY data ./data
 COPY .env ./
 
+# Build the application
 RUN npm run build
 
 # Production stage
@@ -28,7 +29,7 @@ COPY --from=builder /usr/src/app/data ./data
 COPY --from=builder /usr/src/app/.env ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Set NODE_ENV to production
 ENV NODE_ENV=production
@@ -36,8 +37,6 @@ ENV NODE_ENV=production
 # Expose port
 EXPOSE 3000
 
-# Use non-root user for security
-USER node
 
 # Run the application
 CMD ["node", "dist/index.js"]

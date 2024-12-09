@@ -95,6 +95,11 @@ The location data for this project was sourced from [madurapa's repository](http
    ```
 2. Access the API at `http://localhost:3000/api`.
 
+3. If you going to use Azure continers:
+   ```bash
+   docker buildx build --platform linux/amd64 \ -t srilankalocationdetails.azurecr.io/slld:latest \ . --push
+   ```
+
 ---
 
 ## Development Commands

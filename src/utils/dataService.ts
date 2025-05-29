@@ -218,6 +218,74 @@ class DataService {
       return distance <= radius;
     });
   }
+
+  getSummary(): {
+    [provinceId: string]: {
+      provinceName: string;
+      districtCount: number;
+      cityCount: number;
+      districts: {
+        [districtId: string]: {
+          districtName: string;
+          cityCount: number;
+        };
+      };
+    };
+  } {
+    if (!this.citiesData || !this.provinces || !this.districts) {
+      throw new Error("Data not loaded");
+    }
+
+    const summary: {
+      [provinceId: string]: {
+        provinceName: string;
+        districtCount: number;
+        cityCount: number;
+        districts: {
+          [districtId: string]: {
+            districtName: string;
+            cityCount: number;
+          };
+        };
+      };
+    } = {};
+
+    // Initialize the summary object with provinces and districts
+    this.provinces.forEach((province) => {
+      // Get districts for this province
+      const provinceDistricts = this.districts!.filter(
+        (district) => district.province_id === province.province_id
+      );
+
+      // Initialize the province entry
+      summary[province.province_id] = {
+        provinceName: province.province_name_en,
+        districtCount: provinceDistricts.length,
+        cityCount: 0, // Will be calculated later
+        districts: {},
+      };
+
+      // Initialize districts
+      provinceDistricts.forEach((district) => {
+        summary[province.province_id].districts[district.district_id] = {
+          districtName: district.district_name_en,
+          cityCount: 0, // Will be calculated later
+        };
+      });
+    });
+
+    // Count cities for each district and province
+    this.citiesData.forEach((city) => {
+      // Add to district count
+      if (summary[city.province_id]?.districts[city.district_id]) {
+        summary[city.province_id].districts[city.district_id].cityCount++;
+        // Also add to total province count
+        summary[city.province_id].cityCount++;
+      }
+    });
+
+    return summary;
+  }
 }
 
 export default new DataService();

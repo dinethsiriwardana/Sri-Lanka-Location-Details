@@ -11,20 +11,20 @@ paths:
       summary: Retrieve all cities
       description: Returns a list of all cities in SL.
       responses:
-        "200":
+        '200':
           description: A list of cities.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/City"
-        "500":
+                  $ref: '#/components/schemas/City'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /cities/district/{districtName}:
     get:
       summary: Retrieve cities by district
@@ -37,26 +37,26 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: A list of cities in the district.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/City"
-        "404":
+                  $ref: '#/components/schemas/City'
+        '404':
           description: No cities found in this district
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "500":
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /cities/province/{provinceName}:
     get:
       summary: Retrieve cities by province
@@ -69,26 +69,26 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: A list of cities in the province.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/City"
-        "404":
+                  $ref: '#/components/schemas/City'
+        '404':
           description: No cities found in this province
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "500":
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /cities/postcode/{postcode}:
     get:
       summary: Retrieve city by postcode
@@ -101,24 +101,24 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: The city for the given postcode.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/City"
-        "404":
+                $ref: '#/components/schemas/City'
+        '404':
           description: City not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "500":
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /cities/search:
     get:
       summary: Search for cities
@@ -139,26 +139,26 @@ paths:
             enum: [en, si, ta]
             default: en
       responses:
-        "200":
+        '200':
           description: Search results for cities.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/City"
-        "400":
+                  $ref: '#/components/schemas/City'
+        '400':
           description: Search term is required
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "404":
+                $ref: '#/components/schemas/Error'
+        '404':
           description: No cities found matching search criteria
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /cities/nearby:
     get:
       summary: Search for cities by GPS
@@ -184,64 +184,64 @@ paths:
             type: number
             default: 5
       responses:
-        "200":
+        '200':
           description: Cities near the given GPS location.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/City"
-        "400":
+                  $ref: '#/components/schemas/City'
+        '400':
           description: Valid latitude and longitude are required
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "404":
+                $ref: '#/components/schemas/Error'
+        '404':
           description: No cities found within specified radius
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /provinces:
     get:
       summary: Retrieve all provinces
       description: Returns a list of all provinces in SL.
       responses:
-        "200":
+        '200':
           description: A list of provinces.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Province"
-        "500":
+                  $ref: '#/components/schemas/Province'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /districts:
     get:
       summary: Retrieve all districts
       description: Returns a list of all districts in SL.
       responses:
-        "200":
+        '200':
           description: A list of districts.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/District"
-        "500":
+                  $ref: '#/components/schemas/District'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /districts/province/{provinceId}:
     get:
       summary: Retrieve districts by province ID
@@ -254,27 +254,27 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: A list of districts in the province.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/District"
-        "404":
+                  $ref: '#/components/schemas/District'
+        '404':
           description: No districts found for this province
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "500":
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-
+                $ref: '#/components/schemas/Error'
+  
   /districts/province-name/{provinceName}:
     get:
       summary: Retrieve districts by province name
@@ -295,44 +295,26 @@ paths:
             enum: [en, si, ta]
             default: en
       responses:
-        "200":
+        '200':
           description: A list of districts in the province.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/District"
-        "404":
+                  $ref: '#/components/schemas/District'
+        '404':
           description: No districts found for this province
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        "500":
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-
-  /summary:
-    get:
-      summary: Retrieve summary statistics
-      description: Returns a summary with the number of districts in each province and the number of cities in each district.
-      responses:
-        "200":
-          description: A summary of provinces, districts, and cities.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Summary"
-        "500":
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:
@@ -396,7 +378,7 @@ components:
         province_name_ta:
           type: string
           description: Province name in Tamil
-
+    
     District:
       type: object
       properties:
@@ -415,7 +397,7 @@ components:
         province_id:
           type: string
           description: Province identifier the district belongs to
-
+    
     Province:
       type: object
       properties:
@@ -431,7 +413,7 @@ components:
         province_name_ta:
           type: string
           description: Province name in Tamil
-
+    
     Error:
       type: object
       required:
@@ -440,29 +422,3 @@ components:
         message:
           type: string
           description: Error message
-
-    Summary:
-      type: object
-      additionalProperties:
-        type: object
-        properties:
-          provinceName:
-            type: string
-            description: The name of the province
-          districtCount:
-            type: integer
-            description: Number of districts in the province
-          cityCount:
-            type: integer
-            description: Total number of cities in the province
-          districts:
-            type: object
-            additionalProperties:
-              type: object
-              properties:
-                districtName:
-                  type: string
-                  description: The name of the district
-                cityCount:
-                  type: integer
-                  description: Number of cities in the district

@@ -1,7 +1,7 @@
 {
-  "name": "sri-lanka-cities-api",
+  "name": "sl-cities-api",
   "version": "1.0.0",
-  "description": "API for Sri Lankan cities, districts, and provinces",
+  "description": "API for SL cities, districts, and provinces",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -12,15 +12,19 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/yamljs": "^0.2.34",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.5",
+    "@types/node": "^20.17.52",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0",

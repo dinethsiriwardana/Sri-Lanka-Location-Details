@@ -12,6 +12,7 @@ RUN npm install
 # Copy source files
 COPY src ./src
 COPY data ./data
+COPY public ./public
 COPY .env ./
 
 # Build the application
@@ -26,6 +27,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/package*.json ./
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/data ./data
+COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/.env ./
 
 # Install only production dependencies

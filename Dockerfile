@@ -14,6 +14,7 @@ COPY src ./src
 COPY data ./data
 COPY public ./public
 COPY .env ./
+COPY openapi.yaml* ./
 
 # Build the application
 RUN npm run build
@@ -29,6 +30,8 @@ COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/data ./data
 COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/.env ./
+COPY --from=builder /usr/src/app/openapi.yaml* ./
+
 
 # Install only production dependencies
 RUN npm ci --omit=dev

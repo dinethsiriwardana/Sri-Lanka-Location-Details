@@ -37,3 +37,20 @@
 #dataBody tr:hover {
   background-color: rgba(13, 110, 253, 0.1);
 }
+
+/* Style for nearby search buttons */
+.nearby-search-btn {
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nearby-search-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Center action buttons in the table */
+#dataTable td:last-child {
+  text-align: center;
+  min-width: 100px;
+}

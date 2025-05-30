@@ -164,6 +164,30 @@ function initExplorer() {
   // Load all cities by default
   fetchData("/cities");
 
+  // Setup event delegation for nearby search buttons added dynamically to rows
+  document.addEventListener("click", function (e) {
+    if (e.target && e.target.closest(".nearby-search-btn")) {
+      const button = e.target.closest(".nearby-search-btn");
+      const lat = button.getAttribute("data-lat");
+      const lon = button.getAttribute("data-lon");
+
+      // Set filter type to nearby
+      filterType.value = "nearby";
+
+      // Trigger the change event to update the UI
+      const event = new Event("change");
+      filterType.dispatchEvent(event);
+
+      // Populate the latitude and longitude inputs
+      latitudeInput.value = lat;
+      longitudeInput.value = lon;
+
+      // Focus on the radius input for easy adjustment
+      radiusInput.focus();
+      radiusInput.select();
+    }
+  });
+
   // Filter change event
   filterType.addEventListener("change", () => {
     filterInputContainer.style.display = "none";
@@ -565,7 +589,7 @@ async function fetchData(endpoint) {
     // Clear the table if there's an error
     const dataBody = document.getElementById("dataBody");
     dataBody.innerHTML =
-      "<tr><td colspan='4' class='text-center'>No data found</td></tr>";
+      "<tr><td colspan='7' class='text-center'>No data found</td></tr>";
   } finally {
     // Hide loading spinner
     const loadingSpinner = document.getElementById("loadingSpinner");
@@ -585,7 +609,7 @@ function renderTable(data) {
 
   if (data.length === 0) {
     dataBody.innerHTML =
-      "<tr><td colspan='4' class='text-center'>No data found</td></tr>";
+      "<tr><td colspan='7' class='text-center'>No data found</td></tr>";
     return;
   }
 
@@ -598,8 +622,22 @@ function renderTable(data) {
       <td>${item.postcode}</td>
       <td>${item.latitude}</td>
       <td>${item.longitude}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary nearby-search-btn" 
+          data-lat="${item.latitude}" data-lon="${item.longitude}" title="Find cities near ${item.city_name_en}">
+          <i class="fas fa-search-location"></i> Nearby
+        </button>
+      </td>
     `;
-    row.addEventListener("click", () => showCityDetails(item));
+
+    // Add click event for row (excluding the button)
+    row.addEventListener("click", (e) => {
+      // Only show city details if the click wasn't on the search button
+      if (!e.target.closest(".nearby-search-btn")) {
+        showCityDetails(item);
+      }
+    });
+
     dataBody.appendChild(row);
   });
 }

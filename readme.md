@@ -1,24 +1,25 @@
 # SL Cities API
 
-An API to retrieve location details of SL, including cities, districts, and provinces. Built with **Node.js**, **Express**, and **TypeScript**, this project is ideal for accessing and searching geographic information for SL locations.
+An API to retrieve location details of Sri Lanka, including cities, districts, and provinces. Built with **Node.js**, **Express**, and **TypeScript**, this project is ideal for accessing and searching geographic information for Sri Lankan locations.
 
-Available on http://slcities.centralindia.azurecontainer.io:3000/api/cities
+Available on: http://slcities.centralindia.azurecontainer.io:3000/api/cities
 
-Postman Repo: https://www.postman.com/team-dineth-s/workspace/lk-location-details/collection/26460626-1f6611a3-e41a-4bd6-8f3d-cbc9ec24ffd2?action=share&creator=26460626
+Postman Collection: [LK Location Details Workspace](https://www.postman.com/team-dineth-s/workspace/lk-location-details/collection/26460626-1f6611a3-e41a-4bd6-8f3d-cbc9ec24ffd2?action=share&creator=26460626)
 
 ---
 
 ## Features
 
-- Retrieve all cities, districts, and provinces.
+- Retrieve all cities, districts, and provinces in Sri Lanka
 - Search cities by:
   - District
   - Province
   - Postcode
   - GPS coordinates (latitude, longitude, radius)
-  - Query strings (name, language).
-- Fetch districts by province name.
-- Easy-to-use REST API with **OpenAPI 3.1.0** documentation.
+  - Query strings (name, language)
+- Fetch districts by province name
+- Get summary statistics of provinces with district and city counts
+- Easy-to-use REST API with **OpenAPI 3.1.0** documentation
 
 ---
 
@@ -30,12 +31,13 @@ The location data for this project was sourced from [madurapa's repository](http
 
 ## Technologies Used
 
-- **Node.js**: Backend runtime.
-- **Express**: REST API framework.
-- **TypeScript**: Strongly typed JavaScript.
-- **Jest**: Testing framework.
-- **Docker**: Containerization.
-- **ESLint & Prettier**: Code quality and formatting.
+- **Node.js**: Backend runtime
+- **Express**: REST API framework
+- **TypeScript**: Strongly typed JavaScript
+- **Jest**: Testing framework
+- **Docker**: Containerization
+- **Azure**: Cloud deployment
+- **ESLint & Prettier**: Code quality and formatting
 
 ---
 
@@ -45,18 +47,23 @@ The location data for this project was sourced from [madurapa's repository](http
 
 - Node.js (>= 18.x)
 - Docker (optional for containerized deployment)
+- Azure CLI (optional for Azure deployment)
 
 ### Steps
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/dinethsiriwardana/Sri-Lanka-Location-Details.git
    cd sl-cities-api
    ```
+
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Set up the environment:
 
    - Create a `.env` file in the root directory with the required variables.
@@ -78,6 +85,7 @@ The location data for this project was sourced from [madurapa's repository](http
 ### Base URL
 
 - Local: `http://localhost:3000/api`
+- Production: `http://slcities.centralindia.azurecontainer.io:3000/api`
 
 ### Endpoints
 
@@ -111,18 +119,87 @@ The location data for this project was sourced from [madurapa's repository](http
 
 ---
 
-## Running with Docker
+## Deployment Options
+
+### Running with Docker
 
 1. Build and start the container:
+
    ```bash
    docker-compose up --build
    ```
+
 2. Access the API at `http://localhost:3000/api`.
 
-3. If you going to use Azure continers:
+3. For Azure Container Registry deployment:
    ```bash
-   docker buildx build --platform linux/amd64 \ -t slcities.azurecr.io/slcities:latest \ . --push
+   docker buildx build --platform linux/amd64 -t slcities.azurecr.io/slcities:latest . --push
    ```
+
+### Deploying to Azure
+
+#### Prerequisites
+
+1. An Azure account with active subscription
+2. Azure CLI installed on your machine
+
+#### Steps
+
+1. Login to Azure:
+
+   ```bash
+   az login
+   ```
+
+2. Create a Resource Group:
+
+   ```bash
+   az group create --name sl-cities-rg --location eastus
+   ```
+
+3. Create Azure Container Registry (ACR):
+
+   ```bash
+   az acr create --name slcitiesregistry --resource-group sl-cities-rg --sku Basic --admin-enabled true
+   ```
+
+4. Get ACR credentials:
+
+   ```bash
+   az acr credential show --name slcitiesregistry
+   ```
+
+5. Build and push Docker image to ACR:
+
+   ```bash
+   # Login to ACR
+   az acr login --name slcitiesregistry
+
+   # Build the image
+   docker build -t slcitiesregistry.azurecr.io/sl-cities:latest .
+
+   # Push the image to ACR
+   docker push slcitiesregistry.azurecr.io/sl-cities:latest
+   ```
+
+6. Create an App Service Plan:
+
+   ```bash
+   az appservice plan create --name sl-cities-plan --resource-group sl-cities-rg --is-linux --sku B1
+   ```
+
+7. Create a Web App:
+
+   ```bash
+   az webapp create --resource-group sl-cities-rg --plan sl-cities-plan --name sl-cities --deployment-container-image-name slcitiesregistry.azurecr.io/sl-cities:latest
+   ```
+
+8. Configure the Web App to use ACR:
+   ```bash
+   az webapp config container set --name sl-cities --resource-group sl-cities-rg --docker-custom-image-name slcitiesregistry.azurecr.io/sl-cities:latest --docker-registry-server-url https://slcitiesregistry.azurecr.io --docker-registry-server-user slcitiesregistry --docker-registry-server-password <password_from_step_4>
+   ```
+
+Your app will be accessible at: https://sl-cities.azurewebsites.net/
 
 ---
 
@@ -139,7 +216,7 @@ The location data for this project was sourced from [madurapa's repository](http
 
 ## API Documentation
 
-The API documentation is available in two formats:
+The API documentation is available in multiple formats:
 
 - **Swagger UI**: Access the interactive API documentation at `http://localhost:3000/api-docs`
 - **OpenAPI Specification**: View or download the raw OpenAPI specification at `http://localhost:3000/api-spec`
@@ -159,6 +236,7 @@ The API documentation follows the OpenAPI 3.1.0 specification and provides detai
     provinceController.ts
     homeController.ts
     docController.ts
+    summaryController.ts
   /middlewares      # Express middlewares
     errorHandler.ts
   /routes           # API route definitions
@@ -166,6 +244,7 @@ The API documentation follows the OpenAPI 3.1.0 specification and provides detai
     districtRoutes.ts
     provinceRoutes.ts
     homeRoutes.ts
+    summaryRoutes.ts
     index.ts
   /types            # TypeScript type definitions
     city.ts
@@ -178,12 +257,19 @@ The API documentation follows the OpenAPI 3.1.0 specification and provides detai
   index.html
   app.js
   styles.css
+  explorer.html
+  provinces.html
+  about.html
+  /css
+  /js
+  /templates
 /dist               # Compiled JavaScript output
 docker-compose.yml
 Dockerfile
 openapi.yaml
 package.json
 tsconfig.json
+azure-deployment.md
 ```
 
 ---

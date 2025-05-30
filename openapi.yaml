@@ -316,24 +316,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /summary:
-    get:
-      summary: Retrieve summary statistics
-      description: Returns a summary with the number of districts in each province and the number of cities in each district.
-      responses:
-        "200":
-          description: A summary of provinces, districts, and cities.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Summary"
-        "500":
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
 components:
   schemas:
     City:
@@ -440,29 +422,3 @@ components:
         message:
           type: string
           description: Error message
-
-    Summary:
-      type: object
-      additionalProperties:
-        type: object
-        properties:
-          provinceName:
-            type: string
-            description: The name of the province
-          districtCount:
-            type: integer
-            description: Number of districts in the province
-          cityCount:
-            type: integer
-            description: Total number of cities in the province
-          districts:
-            type: object
-            additionalProperties:
-              type: object
-              properties:
-                districtName:
-                  type: string
-                  description: The name of the district
-                cityCount:
-                  type: integer
-                  description: Number of cities in the district

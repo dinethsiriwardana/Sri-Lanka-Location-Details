@@ -13,7 +13,7 @@ RUN npm install
 COPY src ./src
 COPY data ./data
 COPY public ./public
-COPY .env ./
+# COPY .env ./
 COPY openapi.yaml* ./
 
 # Build the application
@@ -29,7 +29,7 @@ COPY --from=builder /usr/src/app/package*.json ./
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/data ./data
 COPY --from=builder /usr/src/app/public ./public
-COPY --from=builder /usr/src/app/.env ./
+# COPY --from=builder /usr/src/app/.env ./
 COPY --from=builder /usr/src/app/openapi.yaml* ./
 
 

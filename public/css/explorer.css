@@ -1,0 +1,39 @@
+/* Additional styles for the Explorer page */
+
+/* Sortable headers styling */
+#dataTable th {
+  cursor: pointer;
+  position: relative;
+  padding-right: 20px; /* Space for the sort icon */
+  user-select: none;
+  background-color: #f8f9fa;
+  transition: background-color 0.2s;
+}
+
+#dataTable th:hover {
+  background-color: #e9ecef;
+}
+
+#dataTable th i.fas {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+#dataTable th i.fa-sort-up,
+#dataTable th i.fa-sort-down {
+  opacity: 1;
+  color: #0d6efd;
+}
+
+/* Make table rows clickable */
+#dataBody tr {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#dataBody tr:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+}

@@ -2,117 +2,27 @@
 const BASE_URL = "/api";
 let summaryData = {};
 
-// DOM Elements
-const sidebarToggle = document.getElementById("sidebarToggle");
-const sidebarMenu = document.querySelectorAll(".sidebar-menu li");
-const contentPages = document.querySelectorAll(".content-page");
-
-// Dashboard Navigation
-sidebarToggle.addEventListener("click", () => {
-  document.body.classList.toggle("sidebar-collapsed");
-
-  // Update toggle button icon
-  const toggleIcon = sidebarToggle.querySelector("i");
-  if (document.body.classList.contains("sidebar-collapsed")) {
-    toggleIcon.classList.remove("fa-bars");
-    toggleIcon.classList.add("fa-expand");
-    sidebarToggle.setAttribute("title", "Expand Sidebar");
-  } else {
-    toggleIcon.classList.remove("fa-expand");
-    toggleIcon.classList.add("fa-bars");
-    sidebarToggle.setAttribute("title", "Collapse Sidebar");
+// Show/Hide loading spinner functions
+function showLoading() {
+  const loadingSpinner = document.getElementById("loadingSpinner");
+  if (loadingSpinner) {
+    loadingSpinner.style.display = "flex";
   }
-});
-
-sidebarMenu.forEach((menuItem) => {
-  menuItem.addEventListener("click", () => {
-    // Get the page name from the data attribute
-    const pageName = menuItem.getAttribute("data-page");
-    showPage(pageName);
-
-    // Update active state
-    sidebarMenu.forEach((item) => item.classList.remove("active"));
-    menuItem.classList.add("active");
-
-    // Handle mobile sidebar
-    if (window.innerWidth < 992) {
-      document.querySelector(".sidebar").classList.remove("mobile-open");
-    }
-  });
-});
-
-// Detect initial hash
-window.addEventListener("load", () => {
-  // If there's no hash in the URL, don't add one
-  const hash = window.location.hash.substring(1);
-  const pageName = hash || "summary";
-
-  showPage(pageName, !hash); // Only update URL if there was a hash already
-
-  // Update active state in the sidebar
-  sidebarMenu.forEach((item) => {
-    if (item.getAttribute("data-page") === pageName) {
-      item.classList.add("active");
-    } else {
-      item.classList.remove("active");
-    }
-  });
-});
-
-// Function to show the selected page
-function showPage(pageName, skipUrlUpdate = false) {
-  contentPages.forEach((page) => {
-    if (page.id === `${pageName}-page`) {
-      page.classList.add("active");
-    } else {
-      page.classList.remove("active");
-    }
-  });
-
-  // Update URL hash only if not skipped
-  if (!skipUrlUpdate) {
-    history.replaceState(null, null, `#${pageName}`);
-  }
-
-  // Load page-specific data
-  loadPageData(pageName);
 }
 
-// Keep track of which pages have been loaded
-const loadedPages = {
-  summary: false,
-  explorer: false,
-  provinces: false,
-  districts: false,
-  about: true, // No data to load for about page
-};
-
-// Function to load page-specific data
-function loadPageData(pageName) {
-  // Only load data if it hasn't been loaded before
-  if (!loadedPages[pageName]) {
-    switch (pageName) {
-      case "summary":
-        loadSummaryData();
-        loadedPages.summary = true;
-        break;
-      case "explorer":
-        initExplorer();
-        loadedPages.explorer = true;
-        break;
-      case "provinces":
-        loadProvinces();
-        loadedPages.provinces = true;
-        break;
-      case "districts":
-        loadDistricts();
-        loadedPages.districts = true;
-        break;
-      case "about":
-        // About page is static, no data loading needed
-        break;
-    }
+function hideLoading() {
+  const loadingSpinner = document.getElementById("loadingSpinner");
+  if (loadingSpinner) {
+    loadingSpinner.style.display = "none";
   }
+}
+
+// Modal handler function
+function showDetailsModal(title, content) {
+  const modal = new bootstrap.Modal(document.getElementById("detailsModal"));
+  document.getElementById("detailsModalLabel").textContent = title;
+  document.getElementById("modal-content").innerHTML = content;
+  modal.show();
 }
 
 // Summary Page
@@ -297,7 +207,11 @@ function initExplorer() {
 
   districtDropdown.addEventListener("change", function () {
     if (districtDropdown.value) {
-      fetchData(`/cities/district/${districtDropdown.value}`);
+      // Get the selected option text (district name) instead of the value (district id)
+      const selectedOption =
+        districtDropdown.options[districtDropdown.selectedIndex];
+      const districtName = selectedOption.textContent;
+      fetchData(`/cities/district/${districtName}`);
     }
   });
 
@@ -361,24 +275,27 @@ async function loadDistricts() {
     const response = await fetch(`${BASE_URL}/districts`);
     const districts = await response.json();
 
+    // Populate district dropdowns for explorer page
     const districtDropdown = document.getElementById("districtDropdown");
-    districtDropdown.innerHTML = '<option value="">Select District</option>';
-    districts.forEach((district) => {
-      const option = document.createElement("option");
-      option.value = district.district_name_en;
-      option.textContent = district.district_name_en;
-      districtDropdown.appendChild(option);
-    });
+    if (districtDropdown) {
+      districtDropdown.innerHTML = '<option value="">Select District</option>';
+      districts.forEach((district) => {
+        const option = document.createElement("option");
+        option.value = district.district_id;
+        option.textContent = district.district_name_en;
+        districtDropdown.appendChild(option);
+      });
+    }
 
     // For districts page
-    populateDistrictsPage(districts);
+    await populateDistrictsPage(districts);
 
     // For district province filter
     const districtProvinceFilter = document.getElementById(
       "district-province-filter"
     );
     if (districtProvinceFilter) {
-      populateProvinceFilter(districtProvinceFilter);
+      await populateProvinceFilter(districtProvinceFilter);
     }
   } catch (error) {
     console.error("Error fetching districts:", error);
@@ -512,18 +429,20 @@ async function populateDistrictsPage(districts) {
         </button>
       </td>
     `;
-    districtsTable.appendChild(row);
 
-    // Set the data-province attribute for filtering
+    // Important: Set the data-province attribute before adding to the table
     row.setAttribute("data-province", district.province_id);
+
+    // Add the row to the table
+    districtsTable.appendChild(row);
   });
 
-  // Set up province filter for districts table
-  setupDistrictProvinceFilter();
+  console.log("Districts populated with data-province attributes");
+  return districts; // Return districts for chaining
 }
 
-// Setup district province filter
-function setupDistrictProvinceFilter() {
+// Setup district province filter - make this available to all pages
+window.setupDistrictProvinceFilter = function () {
   const districtProvinceFilter = document.getElementById(
     "district-province-filter"
   );
@@ -541,10 +460,10 @@ function setupDistrictProvinceFilter() {
       }
     });
   });
-}
+};
 
-// Populate province filter dropdown
-async function populateProvinceFilter(dropdown) {
+// Populate province filter dropdown - make this available to all pages
+window.populateProvinceFilter = async function (dropdown) {
   try {
     const response = await fetch(`${BASE_URL}/provinces`);
     const provinces = await response.json();
@@ -559,7 +478,7 @@ async function populateProvinceFilter(dropdown) {
   } catch (error) {
     console.error("Error fetching provinces for filter:", error);
   }
-}
+};
 
 // Show district cities in modal
 window.showDistrictCities = async function (districtId) {
@@ -619,7 +538,7 @@ window.showDistrictCities = async function (districtId) {
 };
 
 // Helper function to get province name by ID
-async function getProvinceName(provinceId) {
+window.getProvinceName = async function (provinceId) {
   try {
     const response = await fetch(`${BASE_URL}/provinces`);
     const provinces = await response.json();
@@ -629,7 +548,7 @@ async function getProvinceName(provinceId) {
     console.error("Error fetching province name:", error);
     return "Unknown Province";
   }
-}
+};
 
 // Main data fetching function for city explorer page
 async function fetchData(endpoint) {
@@ -677,6 +596,8 @@ function renderTable(data) {
       <td>${item.district_name_en}</td>
       <td>${item.province_name_en}</td>
       <td>${item.postcode}</td>
+      <td>${item.latitude}</td>
+      <td>${item.longitude}</td>
     `;
     row.addEventListener("click", () => showCityDetails(item));
     dataBody.appendChild(row);
@@ -770,33 +691,61 @@ window.sortTable = function (columnIndex) {
 
   table.setAttribute("data-sort-dir", sortDirection === 1 ? "asc" : "desc");
 
+  // Update sort indicators in table headers
+  updateSortIndicators(
+    table,
+    columnIndex,
+    sortDirection === 1 ? "asc" : "desc"
+  );
+
   // Sort the rows
   rows.sort((a, b) => {
-    const aValue = a.cells[columnIndex].textContent.trim().toLowerCase();
-    const bValue = b.cells[columnIndex].textContent.trim().toLowerCase();
-    return sortDirection * (aValue > bValue ? 1 : aValue < bValue ? -1 : 0);
+    const aText = a.cells[columnIndex].textContent.trim();
+    const bText = b.cells[columnIndex].textContent.trim();
+
+    // Check if we're sorting numeric columns (Latitude, Longitude, Postcode)
+    if (columnIndex === 3 || columnIndex === 4 || columnIndex === 5) {
+      const aValue = parseFloat(aText) || 0;
+      const bValue = parseFloat(bText) || 0;
+      return sortDirection * (aValue - bValue);
+    } else {
+      // Text comparison for non-numeric columns
+      const aValue = aText.toLowerCase();
+      const bValue = bText.toLowerCase();
+      return sortDirection * (aValue > bValue ? 1 : aValue < bValue ? -1 : 0);
+    }
   });
 
   // Re-add the sorted rows
   rows.forEach((row) => tbody.appendChild(row));
 };
 
-// Load summary data when page loads
-document.addEventListener("DOMContentLoaded", () => {
-  // Small delay to ensure the UI is ready before loading data
-  setTimeout(() => {
-    loadSummaryData();
-  }, 100);
+// Function to update sort indicators in table headers
+function updateSortIndicators(table, activeColumnIndex, direction) {
+  const headers = table.querySelectorAll("thead th");
 
-  // Setup sidebar toggle icon based on initial state
-  const toggleIcon = sidebarToggle.querySelector("i");
-  if (document.body.classList.contains("sidebar-collapsed")) {
-    toggleIcon.classList.remove("fa-bars");
-    toggleIcon.classList.add("fa-expand");
-    sidebarToggle.setAttribute("title", "Expand Sidebar");
-  } else {
-    toggleIcon.classList.remove("fa-expand");
-    toggleIcon.classList.add("fa-bars");
-    sidebarToggle.setAttribute("title", "Collapse Sidebar");
+  // Remove all active sort classes
+  headers.forEach((header) => {
+    // Reset to default sort icon
+    const icon = header.querySelector("i.fas");
+    if (icon) {
+      icon.className = "fas fa-sort";
+    }
+  });
+
+  // Add the appropriate sort icon to the active column
+  const activeHeader = headers[activeColumnIndex];
+  if (activeHeader) {
+    const icon = activeHeader.querySelector("i.fas");
+    if (icon) {
+      icon.className =
+        direction === "asc" ? "fas fa-sort-up" : "fas fa-sort-down";
+    }
   }
+}
+
+// Initialize page based on current path
+document.addEventListener("DOMContentLoaded", () => {
+  // No automatic initialization in the shared file
+  // Each page has its own initialization script
 });

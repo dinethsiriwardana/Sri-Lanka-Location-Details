@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SL Cities - Explorer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="dashboard.css" rel="stylesheet">
+    <!-- Explorer Page CSS -->
+    <link href="css/explorer.css" rel="stylesheet">
+</head>
+
+<body class="sidebar-collapsed" data-page="explorer">
+    <div id="header-placeholder"></div>
+
+    <!-- Explorer Page Content -->
+    <div class="content-page active" id="explorer-page">
+        <div class="container-fluid">
+            <h2 class="page-title">City Explorer</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="filter-card">
+                        <h4 class="filter-title"><i class="fas fa-filter"></i> Filter Options</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select id="filterType" class="form-select">
+                                    <option value="">Select Filter Type</option>
+                                    <option value="district">By District</option>
+                                    <option value="province">By Province</option>
+                                    <option value="postcode">By Postcode</option>
+                                    <option value="search">Search Cities</option>
+                                    <option value="nearby">Nearby Cities</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3" id="filterInputContainer" style="display: none">
+                                <input type="text" id="filterInput" class="form-control"
+                                    placeholder="Enter filter value" />
+                            </div>
+                            <div class="col-md-3" id="districtDropdownContainer" style="display: none">
+                                <select id="districtDropdown" class="form-select">
+                                    <option value="">Select District</option>
+                                    <!-- Districts will be populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="col-md-3" id="provinceDropdownContainer" style="display: none">
+                                <select id="provinceDropdown" class="form-select">
+                                    <option value="">Select Province</option>
+                                    <!-- Provinces will be populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="col-md-3" id="nearbyContainer" style="display: none">
+                                <div class="input-group">
+                                    <span class="input-group-text">Lat</span>
+                                    <input type="text" id="latitudeInput" class="form-control" placeholder="Latitude" />
+                                    <span class="input-group-text">Lon</span>
+                                    <input type="text" id="longitudeInput" class="form-control"
+                                        placeholder="Longitude" />
+                                </div>
+                                <div class="input-group mt-2">
+                                    <span class="input-group-text">Radius (km)</span>
+                                    <input type="number" id="radiusInput" class="form-control" placeholder="Radius"
+                                        value="10" min="1" />
+                                    <button id="nearbySearchBtn" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spinner-container" id="loadingSpinner">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="table-responsive">
+                                    <table id="dataTable" class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th onclick="sortTable(0)"><i class="fas fa-sort"></i> Name
+                                                </th>
+                                                <th onclick="sortTable(1)"><i class="fas fa-sort"></i>
+                                                    District</th>
+                                                <th onclick="sortTable(2)"><i class="fas fa-sort"></i>
+                                                    Province</th>
+                                                <th onclick="sortTable(3)"><i class="fas fa-sort"></i>
+                                                    Postcode</th>
+                                                <th onclick="sortTable(4)"><i class="fas fa-sort"></i>
+                                                    Latitude</th>
+                                                <th onclick="sortTable(5)"><i class="fas fa-sort"></i>
+                                                    Longitude</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Template Loader -->
+    <script src="js/template-loader.js"></script>
+    <!-- Core Dashboard JS -->
+    <script src="dashboard.js"></script>
+    <!-- Page Specific Script -->
+    <script src="js/explorer.js"></script>
+</body>
+
+</html>

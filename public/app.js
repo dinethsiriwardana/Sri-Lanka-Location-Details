@@ -35,7 +35,7 @@ async function loadDistricts() {
     districtDropdown.innerHTML = '<option value="">Select District</option>';
     districts.forEach((district) => {
       const option = document.createElement("option");
-      option.value = district.district_name_en;
+      option.value = district.district_id;
       option.textContent = district.district_name_en;
       districtDropdown.appendChild(option);
     });
@@ -157,7 +157,10 @@ filterType.addEventListener("change", function () {
 // Event listeners for automatic data fetching
 districtDropdown.addEventListener("change", function () {
   if (this.value) {
-    fetchData(`/cities/district/${this.value}`);
+    // Get the selected option text (district name) instead of the value (district id)
+    const selectedOption = this.options[this.selectedIndex];
+    const districtName = selectedOption.textContent;
+    fetchData(`/cities/district/${districtName}`);
   }
 });
 

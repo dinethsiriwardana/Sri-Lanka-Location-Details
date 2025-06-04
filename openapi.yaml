@@ -2,9 +2,12 @@ openapi: 3.1.0
 info:
   title: SL Cities API
   description: API for retrieving location details of SL, including cities, districts, and provinces.
-  version: 1.0.0
+  version: 1.1.0
 servers:
+  - url: https://slcities.live/api
+    description: Production server
   - url: http://localhost:3000/api
+    description: Local development server
 paths:
   /cities:
     get:

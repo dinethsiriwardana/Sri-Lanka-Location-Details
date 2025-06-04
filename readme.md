@@ -2,9 +2,9 @@
 
 An API to retrieve location details of Sri Lanka, including cities, districts, and provinces. Built with **Node.js**, **Express**, and **TypeScript**, this project is ideal for accessing and searching geographic information for Sri Lankan locations.
 
-Available on: http://slcities.centralindia.azurecontainer.io:3000/api/cities
+Available on: https://slcities.live/api/cities
 
-Postman Collection: [LK Location Details Workspace](https://www.postman.com/team-dineth-s/workspace/lk-location-details/collection/26460626-1f6611a3-e41a-4bd6-8f3d-cbc9ec24ffd2?action=share&creator=26460626)
+Postman Collection: [LK Location Details Workspace](https://elements.getpostman.com/redirect?entityId=26460626-719284db-abf7-4258-84c4-4c21acc9b650&entityType=collection)
 
 ---
 
@@ -85,7 +85,8 @@ The location data for this project was sourced from [madurapa's repository](http
 ### Base URL
 
 - Local: `http://localhost:3000/api`
-- Production: `http://slcities.centralindia.azurecontainer.io:3000/api`
+- Production: `https://slcities.live/api`
+- Legacy: `http://slcities.centralindia.azurecontainer.io:3000/api`
 
 ### Endpoints
 
@@ -199,7 +200,7 @@ The location data for this project was sourced from [madurapa's repository](http
    az webapp config container set --name sl-cities --resource-group sl-cities-rg --docker-custom-image-name slcitiesregistry.azurecr.io/sl-cities:latest --docker-registry-server-url https://slcitiesregistry.azurecr.io --docker-registry-server-user slcitiesregistry --docker-registry-server-password <password_from_step_4>
    ```
 
-Your app will be accessible at: https://sl-cities.azurewebsites.net/
+Your app will be accessible at: https://slcities.live/
 
 ---
 
@@ -218,9 +219,13 @@ Your app will be accessible at: https://sl-cities.azurewebsites.net/
 
 The API documentation is available in multiple formats:
 
-- **Swagger UI**: Access the interactive API documentation at `http://localhost:3000/api-docs`
-- **OpenAPI Specification**: View or download the raw OpenAPI specification at `http://localhost:3000/api-spec`
-- **Postman Collection**: Available at the [Postman workspace](https://www.postman.com/team-dineth-s/workspace/lk-location-details/collection/26460626-1f6611a3-e41a-4bd6-8f3d-cbc9ec24ffd2?action=share&creator=26460626)
+- **Swagger UI**: Access the interactive API documentation at:
+  - Local: `http://localhost:3000/api-docs`
+  - Production: `https://slcities.live/api-docs`
+- **OpenAPI Specification**: View or download the raw OpenAPI specification at:
+  - Local: `http://localhost:3000/api-spec`
+  - Production: `https://slcities.live/api-spec`
+- **Postman Collection**: Available at the [Postman workspace](https://elements.getpostman.com/redirect?entityId=26460626-719284db-abf7-4258-84c4-4c21acc9b650&entityType=collection)
 
 The API documentation follows the OpenAPI 3.1.0 specification and provides detailed information about all endpoints, request parameters, and response schemas.
 

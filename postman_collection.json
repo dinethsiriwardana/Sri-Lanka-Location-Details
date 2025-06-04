@@ -1,0 +1,659 @@
+{
+  "info": {
+    "_postman_id": "1f6611a3-e41a-4bd6-8f3d-cbc9ec24ffd2",
+    "name": "SL Cities API",
+    "description": "API for retrieving location details of Sri Lanka, including cities, districts, and provinces.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Cities",
+      "item": [
+        {
+          "name": "Get All Cities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities"]
+            },
+            "description": "Returns a list of all cities in Sri Lanka."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"city_id\": \"118\",\n    \"city_name_en\": \"Colombo 15\",\n    \"city_name_si\": \"කොළඹ 15\",\n    \"city_name_ta\": \"கொழும்பு 15\",\n    \"sub_name_en\": \"Modara\",\n    \"sub_name_si\": \"මෝදර\",\n    \"sub_name_ta\": \"முகத்துவாரம்\",\n    \"postcode\": \"01500\",\n    \"latitude\": \"6.96547650\",\n    \"longitude\": \"79.87083950\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  },\n  {\n    \"city_id\": \"329\",\n    \"city_name_en\": \"Akarawita\",\n    \"city_name_si\": \"අකරවිට\",\n    \"city_name_ta\": \"அகரவிட்ட\",\n    \"sub_name_en\": null,\n    \"sub_name_si\": null,\n    \"sub_name_ta\": null,\n    \"postcode\": \"10732\",\n    \"latitude\": \"6.84221160\",\n    \"longitude\": \"80.00302570\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Cities by District",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities/district/Colombo",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities", "district", "Colombo"]
+            },
+            "description": "Returns cities located in the specified district."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/district/Colombo",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "district", "Colombo"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"city_id\": \"118\",\n    \"city_name_en\": \"Colombo 15\",\n    \"city_name_si\": \"කොළඹ 15\",\n    \"city_name_ta\": \"கொழும்பு 15\",\n    \"sub_name_en\": \"Modara\",\n    \"sub_name_si\": \"මෝදර\",\n    \"sub_name_ta\": \"முகத்துவாரம்\",\n    \"postcode\": \"01500\",\n    \"latitude\": \"6.96547650\",\n    \"longitude\": \"79.87083950\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  },\n  {\n    \"city_id\": \"329\",\n    \"city_name_en\": \"Akarawita\",\n    \"city_name_si\": \"අකරවිට\",\n    \"city_name_ta\": \"அகரவிட்ட\",\n    \"sub_name_en\": null,\n    \"sub_name_si\": null,\n    \"sub_name_ta\": null,\n    \"postcode\": \"10732\",\n    \"latitude\": \"6.84221160\",\n    \"longitude\": \"80.00302570\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  }\n]"
+            },
+            {
+              "name": "Not Found Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/district/NonExistingDistrict",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "district", "NonExistingDistrict"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"No cities found in this district\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Cities by Province",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities/province/Western",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities", "province", "Western"]
+            },
+            "description": "Returns cities located in the specified province."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/province/Western",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "province", "Western"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"city_id\": \"118\",\n    \"city_name_en\": \"Colombo 15\",\n    \"city_name_si\": \"කොළඹ 15\",\n    \"city_name_ta\": \"கொழும்பு 15\",\n    \"sub_name_en\": \"Modara\",\n    \"sub_name_si\": \"මෝදර\",\n    \"sub_name_ta\": \"முகத்துவாரம்\",\n    \"postcode\": \"01500\",\n    \"latitude\": \"6.96547650\",\n    \"longitude\": \"79.87083950\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get City by Postcode",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities/postcode/01500",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities", "postcode", "01500"]
+            },
+            "description": "Returns the city associated with the given postcode."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/postcode/01500",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "postcode", "01500"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"city_id\": \"118\",\n  \"city_name_en\": \"Colombo 15\",\n  \"city_name_si\": \"කොළඹ 15\",\n  \"city_name_ta\": \"கொழும்பு 15\",\n  \"sub_name_en\": \"Modara\",\n  \"sub_name_si\": \"මෝදර\",\n  \"sub_name_ta\": \"முகத்துவாரம்\",\n  \"postcode\": \"01500\",\n  \"latitude\": \"6.96547650\",\n  \"longitude\": \"79.87083950\",\n  \"district_id\": \"5\",\n  \"district_name_en\": \"Colombo\",\n  \"district_name_si\": \"කොළඹ\",\n  \"district_name_ta\": \"கொழும்பு\",\n  \"province_id\": \"1\",\n  \"province_name_en\": \"Western\",\n  \"province_name_si\": \"බස්නාහිර\",\n  \"province_name_ta\": \"மேல்\"\n}"
+            },
+            {
+              "name": "Not Found Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/postcode/99999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "postcode", "99999"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"City not found\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Search Cities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities/search?q=Colombo&lang=en",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Colombo",
+                  "description": "Query string for the city name"
+                },
+                {
+                  "key": "lang",
+                  "value": "en",
+                  "description": "Language of the city name (en, si, or ta)"
+                }
+              ]
+            },
+            "description": "Search for cities by name."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/search?q=Colombo&lang=en",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "search"],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Colombo"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"city_id\": \"118\",\n    \"city_name_en\": \"Colombo 15\",\n    \"city_name_si\": \"කොළඹ 15\",\n    \"city_name_ta\": \"கொழும்பு 15\",\n    \"sub_name_en\": \"Modara\",\n    \"sub_name_si\": \"මෝදර\",\n    \"sub_name_ta\": \"முகத்துவாரம்\",\n    \"postcode\": \"01500\",\n    \"latitude\": \"6.96547650\",\n    \"longitude\": \"79.87083950\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  }\n]"
+            },
+            {
+              "name": "Bad Request Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/search",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "search"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Search term is required\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Search Cities Nearby",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cities/nearby?lat=6.9654&lon=79.8708&radius=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["cities", "nearby"],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "6.9654",
+                  "description": "Latitude of the location"
+                },
+                {
+                  "key": "lon",
+                  "value": "79.8708",
+                  "description": "Longitude of the location"
+                },
+                {
+                  "key": "radius",
+                  "value": "2",
+                  "description": "Search radius in kilometers (default: 5)"
+                }
+              ]
+            },
+            "description": "Find cities near a given GPS coordinate."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/nearby?lat=6.9654&lon=79.8708&radius=2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "nearby"],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "6.9654"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "79.8708"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"city_id\": \"118\",\n    \"city_name_en\": \"Colombo 15\",\n    \"city_name_si\": \"කොළඹ 15\",\n    \"city_name_ta\": \"கொழும்பு 15\",\n    \"sub_name_en\": \"Modara\",\n    \"sub_name_si\": \"මෝදර\",\n    \"sub_name_ta\": \"முகத்துவாரம்\",\n    \"postcode\": \"01500\",\n    \"latitude\": \"6.96547650\",\n    \"longitude\": \"79.87083950\",\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  }\n]"
+            },
+            {
+              "name": "Bad Request Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/nearby?lat=invalid&lon=79.8708",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "nearby"],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "invalid"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "79.8708"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Valid latitude and longitude are required\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Provinces",
+      "item": [
+        {
+          "name": "Get All Provinces",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/provinces",
+              "host": ["{{baseUrl}}"],
+              "path": ["provinces"]
+            },
+            "description": "Returns a list of all provinces in SL."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/provinces",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["provinces"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"province_id\": \"1\",\n    \"province_name_en\": \"Western\",\n    \"province_name_si\": \"බස්නාහිර\",\n    \"province_name_ta\": \"மேல்\"\n  },\n  {\n    \"province_id\": \"2\",\n    \"province_name_en\": \"Central\",\n    \"province_name_si\": \"මධ්‍යම\",\n    \"province_name_ta\": \"மத்திய\"\n  }\n]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Districts",
+      "item": [
+        {
+          "name": "Get All Districts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts"]
+            },
+            "description": "Returns a list of all districts in SL."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/districts",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["districts"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\"\n  },\n  {\n    \"district_id\": \"6\",\n    \"district_name_en\": \"Gampaha\",\n    \"district_name_si\": \"ගම්පහ\",\n    \"district_name_ta\": \"கம்பஹா\",\n    \"province_id\": \"1\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Districts by Province ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts/province/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts", "province", "1"]
+            },
+            "description": "Returns districts located in the specified province using province ID."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/districts/province/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["districts", "province", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\"\n  },\n  {\n    \"district_id\": \"6\",\n    \"district_name_en\": \"Gampaha\",\n    \"district_name_si\": \"ගම්පහ\",\n    \"district_name_ta\": \"கம்பஹா\",\n    \"province_id\": \"1\"\n  },\n  {\n    \"district_id\": \"7\",\n    \"district_name_en\": \"Kalutara\",\n    \"district_name_si\": \"කළුතර\",\n    \"district_name_ta\": \"களுத்துறை\",\n    \"province_id\": \"1\"\n  }\n]"
+            },
+            {
+              "name": "Not Found Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/districts/province/999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["districts", "province", "999"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"No districts found for this province\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Districts by Province Name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts/province-name/Western?lang=en",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts", "province-name", "Western"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en",
+                  "description": "Language of the province name (en, si, or ta)"
+                }
+              ]
+            },
+            "description": "Returns districts located in the specified province using province name."
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/districts/province-name/Western?lang=en",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["districts", "province-name", "Western"],
+                  "query": [
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"district_id\": \"5\",\n    \"district_name_en\": \"Colombo\",\n    \"district_name_si\": \"කොළඹ\",\n    \"district_name_ta\": \"கொழும்பு\",\n    \"province_id\": \"1\"\n  },\n  {\n    \"district_id\": \"6\",\n    \"district_name_en\": \"Gampaha\",\n    \"district_name_si\": \"ගම්පහ\",\n    \"district_name_ta\": \"கம்பஹா\",\n    \"province_id\": \"1\"\n  },\n  {\n    \"district_id\": \"7\",\n    \"district_name_en\": \"Kalutara\",\n    \"district_name_si\": \"කළුතර\",\n    \"district_name_ta\": \"களுத்துறை\",\n    \"province_id\": \"1\"\n  }\n]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "API Documentation",
+      "item": [
+        {
+          "name": "Get API Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api-docs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api-docs"]
+            },
+            "description": "Interactive API documentation (Swagger UI)"
+          }
+        },
+        {
+          "name": "Get API Specification",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api-spec",
+              "host": ["{{baseUrl}}"],
+              "path": ["api-spec"]
+            },
+            "description": "Raw OpenAPI specification in JSON format"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://slcities.live/api",
+      "type": "string",
+      "disabled": false,
+      "description": "Production API URL"
+    },
+    {
+      "key": "baseUrlLocal",
+      "value": "http://localhost:3000/api",
+      "type": "string",
+      "disabled": true,
+      "description": "Local development API URL"
+    }
+  ]
+}

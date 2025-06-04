@@ -1,0 +1,602 @@
+{
+  "info": {
+    "_postman_id": "2f993e84-4b1a-4d63-a7df-cbc9ec24ffd2",
+    "name": "SL Cities API Test Data",
+    "description": "Test data for SL Cities API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Cities Endpoint Tests",
+      "item": [
+        {
+          "name": "Cities - Test Valid Requests",
+          "item": [
+            {
+              "name": "Get All Cities",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Response is an array\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(Array.isArray(jsonData)).to.eql(true);",
+                      "});",
+                      "",
+                      "pm.test(\"Response has city data structure\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    if (jsonData.length > 0) {",
+                      "        pm.expect(jsonData[0]).to.have.property('city_id');",
+                      "        pm.expect(jsonData[0]).to.have.property('city_name_en');",
+                      "        pm.expect(jsonData[0]).to.have.property('district_name_en');",
+                      "        pm.expect(jsonData[0]).to.have.property('province_name_en');",
+                      "    }",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities"]
+                },
+                "description": "Should return an array of cities"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Cities by District - Colombo",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"All cities are in Colombo district\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    var allInColombo = jsonData.every(function(city) {",
+                      "        return city.district_name_en === 'Colombo';",
+                      "    });",
+                      "    pm.expect(allInColombo).to.be.true;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/district/Colombo",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "district", "Colombo"]
+                },
+                "description": "Should return cities in Colombo district"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Cities by Province - Western",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"All cities are in Western province\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    var allInWestern = jsonData.every(function(city) {",
+                      "        return city.province_name_en === 'Western';",
+                      "    });",
+                      "    pm.expect(allInWestern).to.be.true;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/province/Western",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "province", "Western"]
+                },
+                "description": "Should return cities in Western province"
+              },
+              "response": []
+            },
+            {
+              "name": "Get City by Postcode - 01500 (Colombo 15)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct city for postcode\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.postcode).to.eql('01500');",
+                      "    pm.expect(jsonData.city_name_en).to.include('Colombo');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/postcode/01500",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "postcode", "01500"]
+                },
+                "description": "Should return Colombo 15"
+              },
+              "response": []
+            },
+            {
+              "name": "Search Cities - Colombo",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Results contain Colombo\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    var hasMatch = jsonData.some(function(city) {",
+                      "        return city.city_name_en.includes('Colombo');",
+                      "    });",
+                      "    pm.expect(hasMatch).to.be.true;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/search?q=Colombo&lang=en",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "search"],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Colombo"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ]
+                },
+                "description": "Should return cities with Colombo in name"
+              },
+              "response": []
+            },
+            {
+              "name": "Find Cities Nearby",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Response is an array\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(Array.isArray(jsonData)).to.eql(true);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/nearby?lat=6.9654&lon=79.8708&radius=2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "nearby"],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "6.9654"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "79.8708"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "2"
+                    }
+                  ]
+                },
+                "description": "Should return cities near the specified coordinates"
+              },
+              "response": []
+            }
+          ],
+          "description": "Test cases for valid requests to city endpoints"
+        },
+        {
+          "name": "Cities - Test Invalid Requests",
+          "item": [
+            {
+              "name": "Get Cities by Invalid District",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      "pm.test(\"Error message is correct\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('message');",
+                      "    pm.expect(jsonData.message).to.include('No cities found');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/district/NonExistingDistrict",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "district", "NonExistingDistrict"]
+                },
+                "description": "Should return 404 for non-existing district"
+              },
+              "response": []
+            },
+            {
+              "name": "Get City by Invalid Postcode",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      "pm.test(\"Error message is correct\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('message');",
+                      "    pm.expect(jsonData.message).to.include('City not found');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/postcode/99999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "postcode", "99999"]
+                },
+                "description": "Should return 404 for non-existing postcode"
+              },
+              "response": []
+            },
+            {
+              "name": "Search Cities - Missing Query",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Error message is correct\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('message');",
+                      "    pm.expect(jsonData.message).to.include('Search term is required');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/search",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "search"]
+                },
+                "description": "Should return 400 for missing query parameter"
+              },
+              "response": []
+            },
+            {
+              "name": "Find Cities Nearby - Invalid Coordinates",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Error message is correct\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('message');",
+                      "    pm.expect(jsonData.message).to.include('Valid latitude and longitude are required');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/cities/nearby?lat=invalid&lon=79.8708",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["cities", "nearby"],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "invalid"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "79.8708"
+                    }
+                  ]
+                },
+                "description": "Should return 400 for invalid coordinates"
+              },
+              "response": []
+            }
+          ],
+          "description": "Test cases for invalid requests to city endpoints"
+        }
+      ],
+      "description": "Tests for the /cities endpoints"
+    },
+    {
+      "name": "Provinces and Districts Endpoint Tests",
+      "item": [
+        {
+          "name": "Get All Provinces",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is an array of provinces\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(Array.isArray(jsonData)).to.eql(true);",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.expect(jsonData[0]).to.have.property('province_id');",
+                  "        pm.expect(jsonData[0]).to.have.property('province_name_en');",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test(\"Western province exists\", function() {",
+                  "    var jsonData = pm.response.json();",
+                  "    var westernExists = jsonData.some(function(province) {",
+                  "        return province.province_name_en === 'Western';",
+                  "    });",
+                  "    pm.expect(westernExists).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/provinces",
+              "host": ["{{baseUrl}}"],
+              "path": ["provinces"]
+            },
+            "description": "Should return all provinces"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Districts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is an array of districts\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(Array.isArray(jsonData)).to.eql(true);",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.expect(jsonData[0]).to.have.property('district_id');",
+                  "        pm.expect(jsonData[0]).to.have.property('district_name_en');",
+                  "        pm.expect(jsonData[0]).to.have.property('province_id');",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test(\"Colombo district exists\", function() {",
+                  "    var jsonData = pm.response.json();",
+                  "    var colomboExists = jsonData.some(function(district) {",
+                  "        return district.district_name_en === 'Colombo';",
+                  "    });",
+                  "    pm.expect(colomboExists).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts"]
+            },
+            "description": "Should return all districts"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by Province ID - 1 (Western)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"All districts are in province 1\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var allInProvince1 = jsonData.every(function(district) {",
+                  "        return district.province_id === '1';",
+                  "    });",
+                  "    pm.expect(allInProvince1).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts/province/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts", "province", "1"]
+            },
+            "description": "Should return districts in Western Province (ID 1)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by Province Name - Western",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Contains Colombo, Gampaha, and Kalutara\", function() {",
+                  "    var jsonData = pm.response.json();",
+                  "    var hasDistricts = ['Colombo', 'Gampaha', 'Kalutara'].every(function(districtName) {",
+                  "        return jsonData.some(function(district) {",
+                  "            return district.district_name_en === districtName;",
+                  "        });",
+                  "    });",
+                  "    pm.expect(hasDistricts).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/districts/province-name/Western?lang=en",
+              "host": ["{{baseUrl}}"],
+              "path": ["districts", "province-name", "Western"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "description": "Should return districts in Western Province"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://slcities.live/api",
+      "type": "string",
+      "description": "Production API URL"
+    }
+  ]
+}

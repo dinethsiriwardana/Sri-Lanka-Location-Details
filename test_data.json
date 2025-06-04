@@ -1,0 +1,301 @@
+[
+  {
+    "id": "1",
+    "name": "Get All Cities",
+    "endpoint": "/cities",
+    "method": "GET",
+    "request": {},
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "city_id": "118",
+          "city_name_en": "Colombo 15",
+          "city_name_si": "කොළඹ 15",
+          "city_name_ta": "கொழும்பு 15",
+          "sub_name_en": "Modara",
+          "sub_name_si": "මෝදර",
+          "sub_name_ta": "முகத்துவாரம்",
+          "postcode": "01500",
+          "latitude": "6.96547650",
+          "longitude": "79.87083950",
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "2",
+    "name": "Get Cities by District",
+    "endpoint": "/cities/district/{districtName}",
+    "method": "GET",
+    "request": {
+      "pathParams": {
+        "districtName": "Colombo"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "city_id": "118",
+          "city_name_en": "Colombo 15",
+          "city_name_si": "කොළඹ 15",
+          "city_name_ta": "கொழும்பு 15",
+          "sub_name_en": "Modara",
+          "sub_name_si": "මෝදර",
+          "sub_name_ta": "முகத்துவாரம்",
+          "postcode": "01500",
+          "latitude": "6.96547650",
+          "longitude": "79.87083950",
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "3",
+    "name": "Get Cities by Province",
+    "endpoint": "/cities/province/{provinceName}",
+    "method": "GET",
+    "request": {
+      "pathParams": {
+        "provinceName": "Western"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "city_id": "118",
+          "city_name_en": "Colombo 15",
+          "city_name_si": "කොළඹ 15",
+          "city_name_ta": "கொழும்பு 15",
+          "sub_name_en": "Modara",
+          "sub_name_si": "මෝදර",
+          "sub_name_ta": "முகத்துவாரம்",
+          "postcode": "01500",
+          "latitude": "6.96547650",
+          "longitude": "79.87083950",
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "4",
+    "name": "Get City by Postcode",
+    "endpoint": "/cities/postcode/{postcode}",
+    "method": "GET",
+    "request": {
+      "pathParams": {
+        "postcode": "01500"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": {
+        "city_id": "118",
+        "city_name_en": "Colombo 15",
+        "city_name_si": "කොළඹ 15",
+        "city_name_ta": "கொழும்பு 15",
+        "sub_name_en": "Modara",
+        "sub_name_si": "මෝදර",
+        "sub_name_ta": "முகத்துவாரம்",
+        "postcode": "01500",
+        "latitude": "6.96547650",
+        "longitude": "79.87083950",
+        "district_id": "5",
+        "district_name_en": "Colombo",
+        "district_name_si": "කොළඹ",
+        "district_name_ta": "கொழும்பு",
+        "province_id": "1",
+        "province_name_en": "Western",
+        "province_name_si": "බස්නාහිර",
+        "province_name_ta": "மேல்"
+      }
+    }
+  },
+  {
+    "id": "5",
+    "name": "Search Cities",
+    "endpoint": "/cities/search",
+    "method": "GET",
+    "request": {
+      "queryParams": {
+        "q": "Colombo",
+        "lang": "en"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "city_id": "118",
+          "city_name_en": "Colombo 15",
+          "city_name_si": "කොළඹ 15",
+          "city_name_ta": "கொழும்பு 15",
+          "sub_name_en": "Modara",
+          "sub_name_si": "මෝදර",
+          "sub_name_ta": "முகத்துவாரம்",
+          "postcode": "01500",
+          "latitude": "6.96547650",
+          "longitude": "79.87083950",
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "6",
+    "name": "Find Nearby Cities",
+    "endpoint": "/cities/nearby",
+    "method": "GET",
+    "request": {
+      "queryParams": {
+        "lat": "6.9654",
+        "lon": "79.8708",
+        "radius": "2"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "city_id": "118",
+          "city_name_en": "Colombo 15",
+          "city_name_si": "කොළඹ 15",
+          "city_name_ta": "கொழும்பு 15",
+          "sub_name_en": "Modara",
+          "sub_name_si": "මෝදර",
+          "sub_name_ta": "முகத்துவாரம்",
+          "postcode": "01500",
+          "latitude": "6.96547650",
+          "longitude": "79.87083950",
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "7",
+    "name": "Get All Provinces",
+    "endpoint": "/provinces",
+    "method": "GET",
+    "request": {},
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "province_id": "1",
+          "province_name_en": "Western",
+          "province_name_si": "බස්නාහිර",
+          "province_name_ta": "மேல்"
+        }
+      ]
+    }
+  },
+  {
+    "id": "8",
+    "name": "Get All Districts",
+    "endpoint": "/districts",
+    "method": "GET",
+    "request": {},
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1"
+        }
+      ]
+    }
+  },
+  {
+    "id": "9",
+    "name": "Get Districts by Province ID",
+    "endpoint": "/districts/province/{provinceId}",
+    "method": "GET",
+    "request": {
+      "pathParams": {
+        "provinceId": "1"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1"
+        }
+      ]
+    }
+  },
+  {
+    "id": "10",
+    "name": "Get Districts by Province Name",
+    "endpoint": "/districts/province-name/{provinceName}",
+    "method": "GET",
+    "request": {
+      "pathParams": {
+        "provinceName": "Western"
+      },
+      "queryParams": {
+        "lang": "en"
+      }
+    },
+    "expectedResponse": {
+      "status": 200,
+      "body": [
+        {
+          "district_id": "5",
+          "district_name_en": "Colombo",
+          "district_name_si": "කොළඹ",
+          "district_name_ta": "கொழும்பு",
+          "province_id": "1"
+        }
+      ]
+    }
+  }
+]

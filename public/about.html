@@ -14,6 +14,31 @@
         rel="stylesheet">
     <!-- Custom CSS -->
     <link href="dashboard.css" rel="stylesheet">
+    <style>
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #d63384;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        .list-group-item {
+            padding: 0.5rem 1rem;
+        }
+    </style>
 </head>
 
 <body class="sidebar-collapsed" data-page="about">
@@ -23,10 +48,10 @@
     <div class="content-page active" id="about-page">
         <div class="container-fluid">
             <h2 class="page-title">About</h2>
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h4>SL Cities</h4>
-                    <p>This application provides information about cities, districts, and provinces in SL.</p>
+                    <p>This application provides information about cities, districts, and provinces in Sri Lanka.</p>
                     <p>You can explore location data through the dashboard, including:</p>
                     <ul>
                         <li>Summary statistics of provinces, districts, and cities</li>
@@ -34,12 +59,131 @@
                         <li>View detailed information about provinces and districts</li>
                     </ul>
                     <h5 class="mt-4">API</h5>
-                    <p>This application is built on top of an API that provides access to SL
+                    <p>This application is built on top of an API that provides access to Sri Lankan
                         geographical data.</p>
                     <p>The API is documented using OpenAPI specification and provides endpoints to retrieve
                         information about cities, districts, and provinces.</p>
                     <p>For more information about the API, check out the <a href="/api-docs">API
                             documentation</a>.</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">API Endpoints</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Base URL</h6>
+                    <ul class="list-unstyled mb-3">
+                        <li><strong>Production:</strong> <code>https://slcities.live/api</code></li>
+                        <li><strong>Local:</strong> <code>http://localhost:3000/api</code></li>
+                    </ul>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h6>Cities</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item"><code>GET /cities</code> - Retrieve all cities</li>
+                                <li class="list-group-item"><code>GET /cities/district/{districtName}</code> - Retrieve
+                                    cities by district</li>
+                                <li class="list-group-item"><code>GET /cities/province/{provinceName}</code> - Retrieve
+                                    cities by province</li>
+                                <li class="list-group-item"><code>GET /cities/postcode/{postcode}</code> - Retrieve a
+                                    city by postcode</li>
+                                <li class="list-group-item">
+                                    <code>GET /cities/search?q={searchTerm}&lang={language}</code> - Search cities</li>
+                                <li class="list-group-item">
+                                    <code>GET /cities/nearby?lat={latitude}&lon={longitude}&radius={radius}</code> -
+                                    Find nearby cities</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h6>Provinces & Districts</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item"><code>GET /provinces</code> - Retrieve all provinces</li>
+                                <li class="list-group-item"><code>GET /districts</code> - Retrieve all districts</li>
+                                <li class="list-group-item"><code>GET /districts/province/{provinceId}</code> - Retrieve
+                                    districts by province ID</li>
+                                <li class="list-group-item">
+                                    <code>GET /districts/province-name/{provinceName}?lang={language}</code> - Retrieve
+                                    districts by province name</li>
+                                <li class="list-group-item"><code>GET /summary</code> - Get a summary of provinces with
+                                    district and city counts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Postman Collection</h5>
+                </div>
+                <div class="card-body">
+                    <p>Use our Postman Collection to easily test and explore all API endpoints:</p>
+                    <div class="d-grid gap-2">
+                        <a href="https://elements.getpostman.com/redirect?entityId=26460626-719284db-abf7-4258-84c4-4c21acc9b650&entityType=collection"
+                            class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>Access Postman Collection
+                        </a>
+                    </div>
+                    <hr>
+                    <h6>Example Requests</h6>
+                    <div class="mb-3">
+                        <h7>Get all cities in Colombo district</h7>
+                        <pre
+                            class="bg-light p-2 rounded mt-2"><code>GET https://slcities.live/api/cities/district/Colombo</code></pre>
+                    </div>
+                    <div class="mb-3">
+                        <h7>Find cities within 5km radius of coordinates</h7>
+                        <pre
+                            class="bg-light p-2 rounded mt-2"><code>GET https://slcities.live/api/cities/nearby?lat=6.927079&lon=79.861244&radius=5</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Developer Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="me-3">
+                            <i class="fas fa-user-circle fa-4x"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Dineth Siriwardana</h6>
+                            <div class="d-flex mt-2">
+                                <a href="https://github.com/dinethsiriwardana" class="me-3 text-dark" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                                <a href="https://github.com/dinethsiriwardana/Sri-Lanka-Location-Details"
+                                    class="text-dark" target="_blank">
+                                    <i class="fas fa-code-branch"></i> Project Repository
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="mb-3">Technologies Used</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fab fa-node-js me-2"></i> Node.js (Backend runtime)</li>
+                                <li><i class="fas fa-server me-2"></i> Express (REST API framework)</li>
+                                <li><i class="fab fa-js me-2"></i> TypeScript (Strongly typed JavaScript)</li>
+                                <li><i class="fas fa-vial me-2"></i> Jest (Testing framework)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fab fa-docker me-2"></i> Docker (Containerization)</li>
+                                <li><i class="fab fa-microsoft me-2"></i> Azure (Cloud deployment)</li>
+                                <li><i class="fas fa-code me-2"></i> ESLint & Prettier (Code quality)</li>
+                                <li><i class="fas fa-file-alt me-2"></i> OpenAPI 3.1.0 (Documentation)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="mb-0"><small class="text-muted">This project is licensed under the MIT License</small></p>
                 </div>
             </div>
         </div>
